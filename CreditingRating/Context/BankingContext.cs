@@ -16,7 +16,6 @@ namespace CreditingRating.Context
         }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Bank> Banks { get; set; }
-        public DbSet<CreditHistory> CreditHistories { get; set; }
 
         public DbSet<BankClient> BankClients { get; set; }
 
@@ -38,12 +37,6 @@ namespace CreditingRating.Context
                 .WithMany(b => b.BankClients)
                 .HasForeignKey(cb => cb.BankId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<CreditHistory>()
-            .Property(c => c.PaymentHistory)
-            .HasConversion(
-                v => string.Join(',', v),
-                v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToList());
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

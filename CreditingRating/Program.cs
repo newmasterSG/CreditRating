@@ -14,24 +14,23 @@ namespace CreditingRating
                 var client = new Client
                 {
                     Salary = 600000,
-                    CreditHistory = new CreditHistory
-                    {
-                        CreditHistoryLength = 5,
-                        CreditUtilization = 10,
-                        PaymentHistory = new List<double> { 1,1,1,1 },
-                        recentInquiries = 0
-                    },
                     Person = new Person
                     {
                         Age = 20,
                         Birthday = new DateOnly(2004, 09, 03).ToString(),
-                        Name = "Daniel",
-                        Surname = "Plotnik",
+                        Name = "ввв",
+                        Surname = "qq",
                         Gender = "male"
                     },
+                    Credits = new List<Credit>
+                    {
+                        new Credit(){ AvailableCredit = 10000, MoneySpent = 0, LatePayment = 0, OpenedDate = new DateTime(1999, 1, 1), Name = "SomeCreidit"},
+                        new Credit(){ AvailableCredit = 10000, MoneySpent = 0, LatePayment = 0, OpenedDate = new DateTime(2000, 1, 1), Name = "SomeCreidit"},
+                        new Credit(){ AvailableCredit = 10000, MoneySpent = 0, LatePayment = 0, OpenedDate = new DateTime(2004, 1, 1), Name = "Mortage"}
+                    }
                 };
                 var bank = new Bank { };
-                var bankClient = new BankClient { Bank = bank, Client = client, Rating = ficoGrade.CalculateScore(client) };
+                var bankClient = new BankClient { Bank = bank, Client = client, Rating = ficoGrade.CalculateFicoScore((List<Credit>)client.Credits) };
                 dbContext1.BankClients.Add(bankClient);
                 dbContext1.SaveChanges();
             }
@@ -42,12 +41,10 @@ namespace CreditingRating
                     .SelectMany(c => c.ClientBanks, (c, p) => new { ClientId = c.Id, Salary = c.Salary, Rating = p.Rating })
                     .ToList();
 
-                //var clients = context.Clients.Select(x => x.Id).ToList();
 
                 foreach (var client in clients)
                 {
                      Console.WriteLine($"Id: {client.ClientId}, Salary: {client.Salary}, Rating: {client.Rating}");
-                    //Console.WriteLine($"Id : {client}");
                 }
             }
 
@@ -63,16 +60,16 @@ namespace CreditingRating
             //    }
             //}
 
-            using (var context = new BankingContext())
-            {
-                var clients = context.Clients.Select(x => x.Id).ToList();
+            //using (var context = new BankingContext())
+            //{
+            //    var clients = context.Clients.Select(x => x.Id).ToList();
 
-                foreach (var client in clients)
-                {
-                    // Console.WriteLine($"Id: {client.ClientId}, Salary: {client.Salary}, Rating: {client.Rating}");
-                    Console.WriteLine($"Id : {client}");
-                }
-            }
+            //    foreach (var client in clients)
+            //    {
+            //        // Console.WriteLine($"Id: {client.ClientId}, Salary: {client.Salary}, Rating: {client.Rating}");
+            //        Console.WriteLine($"Id : {client}");
+            //    }
+            //}
         }
     }
 }

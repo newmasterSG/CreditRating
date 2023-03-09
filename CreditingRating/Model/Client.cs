@@ -19,18 +19,13 @@ namespace CreditingRating.Model
         [Required]
         [Column("client_salary")]
         public double Salary { get; set; }
-
-        [ForeignKey("CreditHistory")]
-        [Column("credit_histoy_id")]
-        public int CreditHistoryId { get; set; }
+        public ICollection<Credit> Credits { get; set; }
 
         [ForeignKey("Person")]
         [Column("person_id")]
         public int PersonId { get; set; }
 
         public Person Person { get; set; }
-
-        public CreditHistory CreditHistory { get; set; }
 
         public IList<BankClient> ClientBanks { get; set; }
     }
