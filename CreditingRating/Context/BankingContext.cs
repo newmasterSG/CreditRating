@@ -37,6 +37,9 @@ namespace CreditingRating.Context
                 .WithMany(b => b.BankClients)
                 .HasForeignKey(cb => cb.BankId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Person>()
+            .HasIndex(p => new { p.Name, p.Surname });
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

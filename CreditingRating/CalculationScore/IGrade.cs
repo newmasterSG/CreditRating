@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CreditingRating.CalculationScore
 {
-    public interface IGrade : ICalculatorGrade
+    public interface IGrade
     {
         public static readonly Dictionary<string, double> _factorWeights = new Dictionary<string, double>()
         {
